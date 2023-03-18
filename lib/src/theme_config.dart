@@ -2,45 +2,48 @@ import 'package:dynamik_theme/src/theme_storage.dart';
 import 'package:dynamik_theme/src/theme_state.dart';
 import 'package:flutter/material.dart';
 
-/// Extend this class to add further customization on theme like, font styles.
-///
-/// Example:
-///
-/// ``` dart
-/// class AppTheme extends ThemeConfig {
-///   AppTheme({required super.lightScheme, required super.darkScheme});
-///
-///   @override
-///   ThemeData fromScheme(ColorScheme scheme) {
-///     final baseTheme = ThemeData.from(colorScheme: scheme);
-///     final textTheme = baseTheme.textTheme;
-///
-///     return baseTheme.copyWith(
-///       textTheme: GoogleFonts.plusJakartaSansTextTheme(
-///         baseTheme.textTheme.copyWith(
-///           headlineSmall: textTheme.headlineSmall?.copyWith(
-///             fontWeight: FontWeight.bold,
-///           ),
-///         ),
-///       ),
-///     );
-///   }
-/// }
-/// ```
+/// Extend this class to add further customization..
 class ThemeConfig {
   ThemeConfig({
     required this.lightScheme,
     required this.darkScheme,
     required this.defaultThemeState,
+    this.useMaterial3,
+    this.textTheme,
+    this.builder,
   });
 
   final ColorScheme lightScheme;
   final ColorScheme darkScheme;
   final ThemeState defaultThemeState;
 
+  final bool? useMaterial3;
+  final TextTheme? textTheme;
+
+  /// Adds furter customization on ThemeData.
+  ///
+  /// Example usage:
+  ///
+  /// ```dart
+  /// builder: (themeData) {
+  ///   return themeData.copyWith(
+  ///     appBarTheme: const AppBarTheme(centerTitle: true),
+  ///   );
+  /// }
+  /// ```
+  final ThemeData? Function(ThemeData themeData)? builder;
+
   /// Override [fromScheme] to add further customization like adding Fonts.
   ThemeData fromScheme(ColorScheme scheme) {
-    return ThemeData.from(colorScheme: scheme);
+    final themeData = ThemeData.from(
+      colorScheme: scheme,
+      useMaterial3: useMaterial3,
+      textTheme: textTheme,
+    );
+    if (builder != null) {
+      return builder!.call(themeData) ?? themeData;
+    }
+    return themeData;
   }
 
   ThemeData get lightTheme => fromScheme(lightScheme);

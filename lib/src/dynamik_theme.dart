@@ -39,13 +39,13 @@ class _DynamikThemeBuilderState<T> extends State<DynamikThemeBuilder> {
     themeState = _storage.read() ?? widget.config.defaultThemeState;
   }
 
-  void onThemeTypeChange(ThemeState value) {
-    if (themeState == value) return;
-
+  void onStateUpdate(ThemeState Function(ThemeState state) updater) {
+    final newState = updater(themeState);
+    if (themeState == newState) return;
     setState(() {
-      themeState = value;
+      themeState = newState;
     });
-    _storage.write(value);
+    _storage.write(newState);
   }
 
   @override
@@ -54,7 +54,7 @@ class _DynamikThemeBuilderState<T> extends State<DynamikThemeBuilder> {
       return DynamikTheme(
         config: widget.config,
         themeState: themeState,
-        onThemeTypeChange: onThemeTypeChange,
+        onStateUpdate: onStateUpdate,
         child: Builder(builder: (context) {
           final themeState = DynamikTheme.of(context).themeState;
           final config = DynamikTheme.of(context).config;
@@ -100,16 +100,16 @@ class _DynamikThemeBuilderState<T> extends State<DynamikThemeBuilder> {
 
 class DynamikTheme extends InheritedWidget {
   const DynamikTheme({
-    required this.onThemeTypeChange,
     super.key,
     required this.config,
     required this.themeState,
+    required this.onStateUpdate,
     required super.child,
   });
 
   final ThemeState themeState;
   final ThemeConfig config;
-  final void Function(ThemeState value) onThemeTypeChange;
+  final void Function(ThemeState Function(ThemeState) updater) onStateUpdate;
 
   @override
   bool updateShouldNotify(covariant DynamikTheme oldWidget) {
@@ -126,5 +126,19 @@ class DynamikTheme extends InheritedWidget {
     return result!;
   }
 
-  void setTheme(ThemeState value) => onThemeTypeChange(value);
+  void setTheme(ThemeState value) => onStateUpdate((_) => value);
+
+  void setThemeMode(ThemeMode value) => onStateUpdate(
+        (state) => state.copyWith(themeMode: value),
+      );
+
+  /// Sets ColorMode.dynamik
+  void setDynamikColorMode() => onStateUpdate(
+        (state) => state.copyWith(colorMode: ColorMode.dynamik),
+      );
+
+  // Sets ColorMode.custom
+  void setCustomColorMode(Color value) => onStateUpdate(
+        (state) => state.copyWith(seed: value, colorMode: ColorMode.custom),
+      );
 }

@@ -1,4 +1,4 @@
-import 'package:dynamik_theme/src/theme_type.dart';
+import 'package:dynamik_theme/src/theme_state.dart';
 
 /// Interface which is used to persist and retrieve state changes.
 abstract class ThemeStorage {

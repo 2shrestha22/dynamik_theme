@@ -1,6 +1,6 @@
 import 'package:dynamic_color/dynamic_color.dart';
 import 'package:dynamik_theme/src/theme_config.dart';
-import 'package:dynamik_theme/src/theme_type.dart';
+import 'package:dynamik_theme/src/theme_state.dart';
 import 'package:flutter/material.dart';
 
 class DynamikThemeBuilder extends StatefulWidget {

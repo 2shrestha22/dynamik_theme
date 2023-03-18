@@ -82,15 +82,3 @@ class ThemeState {
   @override
   int get hashCode => themeMode.hashCode ^ colorMode.hashCode ^ seed.hashCode;
 }
-
-enum SimpleThemeType {
-  light(ThemeState(themeMode: ThemeMode.light)),
-  dark(ThemeState(themeMode: ThemeMode.dark)),
-  dynamik(ThemeState(
-    themeMode: ThemeMode.system,
-    colorMode: ColorMode.dynamik,
-  ));
-
-  const SimpleThemeType(this.themeData);
-  final ThemeState themeData;
-}

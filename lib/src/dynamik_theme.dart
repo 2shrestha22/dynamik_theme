@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 class DynamikThemeBuilder extends StatefulWidget {
   const DynamikThemeBuilder({
     super.key,
-    required this.defaultTheme,
     required this.config,
     required this.builder,
   });
@@ -16,7 +15,6 @@ class DynamikThemeBuilder extends StatefulWidget {
   //         as DynamikTheme;
 
   /// ThemeType when theme is not saved yet.
-  final ThemeType defaultTheme;
   final ThemeConfig config;
 
   /// ThemeData theme, ThemeData darkTheme, ThemeMode themeMode.
@@ -31,21 +29,21 @@ class DynamikThemeBuilder extends StatefulWidget {
 }
 
 class _DynamikThemeBuilderState<T> extends State<DynamikThemeBuilder> {
-  late ThemeType themeType;
+  late ThemeState themeState;
 
   late final _storage = ThemeConfig.storage;
 
   @override
   void initState() {
     super.initState();
-    themeType = _storage.read() ?? widget.defaultTheme;
+    themeState = _storage.read() ?? widget.config.defaultThemeState;
   }
 
-  void onThemeTypeChange(ThemeType value) {
-    if (themeType == value) return;
+  void onThemeTypeChange(ThemeState value) {
+    if (themeState == value) return;
 
     setState(() {
-      themeType = value;
+      themeState = value;
     });
     _storage.write(value);
   }
@@ -55,38 +53,45 @@ class _DynamikThemeBuilderState<T> extends State<DynamikThemeBuilder> {
     return DynamicColorBuilder(builder: (lightDynamic, darkDynamic) {
       return DynamikTheme(
         config: widget.config,
-        themeType: themeType,
+        themeState: themeState,
         onThemeTypeChange: onThemeTypeChange,
         child: Builder(builder: (context) {
-          final themeType = DynamikTheme.of(context).themeType;
+          final themeState = DynamikTheme.of(context).themeState;
           final config = DynamikTheme.of(context).config;
 
-          switch (themeType) {
-            case ThemeType.light:
-              return widget.builder(
-                config.lightTheme,
-                config.darkTheme,
-                ThemeMode.light,
-              );
+          late ThemeData themeData;
+          late ThemeData darkThemeData;
 
-            case ThemeType.dark:
-              return widget.builder(
-                config.lightTheme,
-                config.darkTheme,
-                ThemeMode.dark,
-              );
-
-            case ThemeType.dynamik:
-              return widget.builder(
-                lightDynamic == null
-                    ? config.lightTheme
-                    : config.fromScheme(lightDynamic),
-                darkDynamic == null
-                    ? config.darkTheme
-                    : config.fromScheme(darkDynamic),
-                ThemeMode.system,
-              );
+          if (themeState.colorMode == ColorMode.dynamik) {
+            // use dynamic theming
+            themeData = lightDynamic == null
+                ? config.lightTheme
+                : config.fromScheme(lightDynamic);
+            darkThemeData = darkDynamic == null
+                ? config.darkTheme
+                : config.fromScheme(darkDynamic);
+          } else if (themeState.colorMode == ColorMode.custom &&
+              themeState.seed != null) {
+            // create new dynamic theme from custom color
+            themeData = config.fromScheme(
+              ColorScheme.fromSeed(seedColor: themeState.seed!),
+            );
+            darkThemeData = config.fromScheme(
+              ColorScheme.fromSeed(
+                seedColor: themeState.seed!,
+                brightness: Brightness.dark,
+              ),
+            );
+          } else {
+            // use default theming from theme config scheme.
+            themeData = config.lightTheme;
+            darkThemeData = config.darkTheme;
           }
+          return widget.builder(
+            themeData,
+            darkThemeData,
+            themeState.themeMode,
+          );
         }),
       );
     });
@@ -98,17 +103,17 @@ class DynamikTheme extends InheritedWidget {
     required this.onThemeTypeChange,
     super.key,
     required this.config,
-    required this.themeType,
+    required this.themeState,
     required super.child,
   });
 
-  final ThemeType themeType;
+  final ThemeState themeState;
   final ThemeConfig config;
-  final void Function(ThemeType value) onThemeTypeChange;
+  final void Function(ThemeState value) onThemeTypeChange;
 
   @override
   bool updateShouldNotify(covariant DynamikTheme oldWidget) {
-    return themeType != oldWidget.themeType;
+    return themeState != oldWidget.themeState;
   }
 
   static DynamikTheme? maybeOf(BuildContext context) {
@@ -121,5 +126,5 @@ class DynamikTheme extends InheritedWidget {
     return result!;
   }
 
-  void setTheme(ThemeType value) => onThemeTypeChange(value);
+  void setTheme(ThemeState value) => onThemeTypeChange(value);
 }

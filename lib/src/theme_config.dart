@@ -1,4 +1,5 @@
 import 'package:dynamik_theme/src/theme_storage.dart';
+import 'package:dynamik_theme/src/theme_type.dart';
 import 'package:flutter/material.dart';
 
 /// Extend this class to add further customization on theme like, font styles.
@@ -27,10 +28,15 @@ import 'package:flutter/material.dart';
 /// }
 /// ```
 class ThemeConfig {
-  ThemeConfig({required this.lightScheme, required this.darkScheme});
+  ThemeConfig({
+    required this.lightScheme,
+    required this.darkScheme,
+    required this.defaultThemeState,
+  });
 
   final ColorScheme lightScheme;
   final ColorScheme darkScheme;
+  final ThemeState defaultThemeState;
 
   /// Override [fromScheme] to add further customization like adding Fonts.
   ThemeData fromScheme(ColorScheme scheme) {

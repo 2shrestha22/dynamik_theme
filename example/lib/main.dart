@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:dynamik_theme/dynamik_theme.dart';
 import 'package:flutter/material.dart';
 
@@ -24,8 +22,8 @@ class _MyAppState extends State<MyApp> {
           seedColor: Colors.red,
           brightness: Brightness.dark,
         ),
+        defaultThemeState: SimpleThemeType.dark.themeData,
       ),
-      defaultTheme: ThemeType.dark,
       builder: (theme, darkTheme, themeMode) {
         return MaterialApp(
           themeMode: themeMode,
@@ -56,10 +54,10 @@ class Home extends StatelessWidget {
         child: Column(
           children: [
             Row(
-              children: ThemeType.values
+              children: SimpleThemeType.values
                   .map((e) => TextButton(
                         onPressed: () {
-                          DynamikTheme.of(context).setTheme(e);
+                          DynamikTheme.of(context).setTheme(e.themeData);
                         },
                         child: Text(e.name),
                       ))

@@ -1,19 +1,12 @@
-<!--
-This README describes the package. If you publish this package to pub.dev,
-this README's contents appear on the landing page for your package.
-
-For information about how to write a good package README, see the guide for
-[writing package pages](https://dart.dev/guides/libraries/writing-package-pages).
-
-For general information about developing packages, see the Dart guide for
-[creating packages](https://dart.dev/guides/libraries/create-library-packages)
-and the Flutter guide for
-[developing packages and plugins](https://flutter.dev/developing-packages).
--->
-
 Easy to use Dynamic Theme for Flutter with automatic persistence support.
 
-## Supported Themes
+<p>
+<a href="https://pub.dev/packages/dynamik_theme"><img src="https://img.shields.io/pub/v/dynamik_theme.svg" alt="Pub"></a>
+<a href="https://github.com/2shrestha22/dynamik_theme"><img src="https://img.shields.io/github/stars/2shrestha22/dynamik_theme.svg?style=flat&logo=github&colorB=deeppink&label=stars" alt="Star on Github"></a>
+<a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/license-MIT-purple.svg" alt="License: MIT"></a>
+</p>
+
+## Supported Themes Modes
 
 - Light Theme
 - Dark Theme

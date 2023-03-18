@@ -3,16 +3,16 @@ import 'package:dynamik_theme/src/theme_config.dart';
 import 'package:dynamik_theme/src/theme_state.dart';
 import 'package:flutter/material.dart';
 
-class DynamikThemeBuilder extends StatefulWidget {
-  const DynamikThemeBuilder({
+class DynamikTheme extends StatefulWidget {
+  const DynamikTheme({
     super.key,
     required this.config,
     required this.builder,
   });
 
-  // static DynamikTheme of(BuildContext context) =>
-  //     context.dependOnInheritedWidgetOfExactType<DynamikTheme>()
-  //         as DynamikTheme;
+  static InheritedDynamikTheme of(BuildContext context) =>
+      context.dependOnInheritedWidgetOfExactType<InheritedDynamikTheme>()
+          as InheritedDynamikTheme;
 
   /// ThemeType when theme is not saved yet.
   final ThemeConfig config;
@@ -25,10 +25,10 @@ class DynamikThemeBuilder extends StatefulWidget {
   ) builder;
 
   @override
-  State<DynamikThemeBuilder> createState() => _DynamikThemeBuilderState();
+  State<DynamikTheme> createState() => _DynamikThemeState();
 }
 
-class _DynamikThemeBuilderState<T> extends State<DynamikThemeBuilder> {
+class _DynamikThemeState<T> extends State<DynamikTheme> {
   late ThemeState themeState;
 
   late final _storage = ThemeConfig.storage;
@@ -51,13 +51,13 @@ class _DynamikThemeBuilderState<T> extends State<DynamikThemeBuilder> {
   @override
   Widget build(BuildContext context) {
     return DynamicColorBuilder(builder: (lightDynamic, darkDynamic) {
-      return DynamikTheme(
+      return InheritedDynamikTheme(
         config: widget.config,
         themeState: themeState,
         onStateUpdate: onStateUpdate,
         child: Builder(builder: (context) {
-          final themeState = DynamikTheme.of(context).themeState;
-          final config = DynamikTheme.of(context).config;
+          final themeState = InheritedDynamikTheme.of(context).themeState;
+          final config = InheritedDynamikTheme.of(context).config;
 
           late ThemeData themeData;
           late ThemeData darkThemeData;
@@ -98,8 +98,8 @@ class _DynamikThemeBuilderState<T> extends State<DynamikThemeBuilder> {
   }
 }
 
-class DynamikTheme extends InheritedWidget {
-  const DynamikTheme({
+class InheritedDynamikTheme extends InheritedWidget {
+  const InheritedDynamikTheme({
     super.key,
     required this.config,
     required this.themeState,
@@ -112,16 +112,16 @@ class DynamikTheme extends InheritedWidget {
   final void Function(ThemeState Function(ThemeState) updater) onStateUpdate;
 
   @override
-  bool updateShouldNotify(covariant DynamikTheme oldWidget) {
+  bool updateShouldNotify(covariant InheritedDynamikTheme oldWidget) {
     return themeState != oldWidget.themeState;
   }
 
-  static DynamikTheme? maybeOf(BuildContext context) {
-    return context.dependOnInheritedWidgetOfExactType<DynamikTheme>();
+  static InheritedDynamikTheme? maybeOf(BuildContext context) {
+    return context.dependOnInheritedWidgetOfExactType<InheritedDynamikTheme>();
   }
 
-  static DynamikTheme of(BuildContext context) {
-    final DynamikTheme? result = maybeOf(context);
+  static InheritedDynamikTheme of(BuildContext context) {
+    final InheritedDynamikTheme? result = maybeOf(context);
     assert(result != null, 'No DynamicTheme found in the context.');
     return result!;
   }

@@ -4,7 +4,8 @@ import 'package:flutter/material.dart';
 
 /// Describes which color mode will be used with [DynamikThemeBuilder].
 enum ColorMode {
-  /// Use sytem color. In android uses Monet.
+  /// Use sytem color. For supported platforms see. dynamic_color
+  /// https://pub.dev/packages/dynamic_color
   dynamik,
 
   /// Manually provide seed color.

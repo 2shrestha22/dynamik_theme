@@ -2,31 +2,31 @@ import 'package:dynamik_theme/src/theme_state.dart';
 
 /// Interface which is used to persist and retrieve state changes.
 abstract class ThemeStorage {
-  /// Returns saved theme.
+  /// Returns saved theme state.
   ThemeState? read();
 
-  /// Persists theme.
-  Future<void> write(ThemeState type);
+  /// Saves theme to storage.
+  Future<void> write(ThemeState state);
 
-  /// Deletes theme info.
+  /// Deletes saved theme state from storage.
   Future<void> delete();
 }
 
 class InMemoryThemeStorage extends ThemeStorage {
-  ThemeState? _themeType;
+  ThemeState? _state;
 
   @override
   Future<void> delete() async {
-    _themeType = null;
+    _state = null;
   }
 
   @override
   ThemeState? read() {
-    return _themeType;
+    return _state;
   }
 
   @override
-  Future<void> write(ThemeState type) async {
-    _themeType = type;
+  Future<void> write(ThemeState state) async {
+    _state = state;
   }
 }

@@ -23,7 +23,7 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
-    return DynamikThemeBuilder(
+    return DynamikTheme(
       config: ThemeConfig(
         useMaterial3: true,
         lightScheme: ColorScheme.fromSeed(

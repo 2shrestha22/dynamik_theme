@@ -4,6 +4,8 @@ import 'package:dynamik_theme/dynamik_theme.dart';
 import 'package:flutter/material.dart';
 
 void main() {
+  /// Set ThemeStorage. If not set InMemoryThemeStorage will be used.
+  ThemeConfig.storage = InMemoryThemeStorage();
   runApp(const MyApp());
 }
 
@@ -26,6 +28,8 @@ class _MyAppState extends State<MyApp> {
     return DynamikTheme(
       config: ThemeConfig(
         useMaterial3: true,
+        // You can also create schemes from:
+        // https://m3.material.io/theme-builder#/custom
         lightScheme: ColorScheme.fromSeed(
           seedColor: Colors.red,
         ),
@@ -37,6 +41,9 @@ class _MyAppState extends State<MyApp> {
         builder: (themeData) {
           return themeData.copyWith(
             appBarTheme: const AppBarTheme(centerTitle: true),
+            inputDecorationTheme: const InputDecorationTheme(
+              border: OutlineInputBorder(),
+            ),
           );
         },
       ),
@@ -69,6 +76,7 @@ class Home extends StatelessWidget {
         child: const Icon(Icons.create),
       ),
       body: SingleChildScrollView(
+        padding: const EdgeInsets.all(8),
         child: Column(
           children: [
             Center(
@@ -79,6 +87,7 @@ class Home extends StatelessWidget {
             ),
             _space,
             Wrap(
+              runSpacing: 10,
               spacing: 10,
               children: SimpleThemeType.values
                   .map((e) => InputChip(
@@ -98,6 +107,7 @@ class Home extends StatelessWidget {
             ),
             _space,
             Wrap(
+              runSpacing: 10,
               spacing: 10,
               children: ThemeMode.values
                   .map(
@@ -113,13 +123,14 @@ class Home extends StatelessWidget {
             ),
             _space,
             Wrap(
+              runSpacing: 10,
               spacing: 10,
               children: ColorMode.values
                   .map(
                     (e) => InputChip(
                       label: Text(e.name),
                       selected: themeState.colorMode == e,
-                      onPressed: themeState.colorMode != ColorMode.dynamik
+                      onPressed: e == ColorMode.dynamik
                           ? () {
                               DynamikTheme.of(context).setDynamikColorMode();
                             }
@@ -131,6 +142,7 @@ class Home extends StatelessWidget {
             _space,
             Wrap(
               spacing: 10,
+              runSpacing: 10,
               key: const ValueKey('value'),
               children: _colors.map((e) {
                 return GestureDetector(
@@ -142,6 +154,46 @@ class Home extends StatelessWidget {
                   ),
                 );
               }).toList(),
+            ),
+            _space,
+            const Divider(),
+            _space,
+            Wrap(
+              runSpacing: 10,
+              spacing: 10,
+              children: [
+                TextButton(onPressed: () {}, child: const Text('TextButton')),
+                ElevatedButton.icon(
+                  onPressed: () {},
+                  icon: const Icon(Icons.image),
+                  label: const Text('ElevatedButton'),
+                ),
+                FilledButton(
+                  onPressed: () {},
+                  child: const Text('FilledButton'),
+                ),
+              ],
+            ),
+            _space,
+            const TextField(),
+            _space,
+            const TextField(
+              decoration: InputDecoration(
+                border: UnderlineInputBorder(),
+                errorText: 'ErrorText',
+              ),
+            ),
+            _space,
+            CheckboxListTile(
+              title: const Text('CheckboxListTile'),
+              value: true,
+              onChanged: (_) {},
+            ),
+            RadioListTile(
+              value: true,
+              groupValue: true,
+              onChanged: (_) {},
+              title: const Text('RadioListTile'),
             ),
           ],
         ),

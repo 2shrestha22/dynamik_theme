@@ -15,14 +15,9 @@ final _colors = List.generate(
     (index) =>
         Color((Random().nextDouble() * 0xFFFFFF).toInt()).withOpacity(1.0));
 
-class MyApp extends StatefulWidget {
+class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  @override
-  State<MyApp> createState() => _MyAppState();
-}
-
-class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return DynamikTheme(

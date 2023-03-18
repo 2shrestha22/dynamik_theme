@@ -12,7 +12,7 @@ abstract class ThemeStorage {
   Future<void> delete();
 }
 
-class InMemoryThemeStorage extends ThemeStorage {
+class InMemoryThemeStorage implements ThemeStorage {
   ThemeState? _state;
 
   @override

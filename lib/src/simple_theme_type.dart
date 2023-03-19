@@ -10,6 +10,6 @@ enum SimpleThemeType {
   light(ThemeState(themeMode: ThemeMode.light)),
   dark(ThemeState(themeMode: ThemeMode.dark));
 
-  const SimpleThemeType(this.themeData);
-  final ThemeState themeData;
+  const SimpleThemeType(this.themeState);
+  final ThemeState themeState;
 }

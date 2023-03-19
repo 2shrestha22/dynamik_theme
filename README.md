@@ -17,6 +17,7 @@ Easy to use Dynamic Theme for Flutter with automatic persistence support.
 ![](https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExMzZjZTUzMmU2MzhiNzg3NmIzYzQ5OTE0MWFjYzdkY2MyMzc5NzUzOCZjdD1n/nBoQ3rfwkGv7XOSGjL/giphy.gif)
 ## Usage
 
+### Setup Storage
 ```dart
 void main() {
   /// Set ThemeStorage. If not set InMemoryThemeStorage will be used.
@@ -25,6 +26,7 @@ void main() {
 }
 ```
 
+### Use `DynamikTheme`
 ```dart
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -43,7 +45,7 @@ class MyApp extends StatelessWidget {
           seedColor: Colors.red,
           brightness: Brightness.dark,
         ),
-        defaultThemeState: SimpleThemeType.dynamik.themeData,
+        defaultThemeState: SimpleThemeType.dynamik.themeState,
         builder: (themeData) {
           // Add more customization on ThemeData.
           return themeData.copyWith(
@@ -67,7 +69,60 @@ class MyApp extends StatelessWidget {
   }
 }
 ```
-Implementing `ThemeStorage` for persistence. You can use Hive, SharedPreferences or any database of your choice.
+### Update Theme
+Update theme with
+```dart
+// Set new theme with provided ThemeState.
+DynamikTheme.of(context).setTheme(themeState);
+
+// Change ThemeMode. ThemeMode.light or ThemeMode.dark
+// or ThemeMode.system.
+DynamikTheme.of(context).setThemeMode(e);
+
+// Set dynamic theme mode. Automatically sets color from device.
+//(not supported on iOS)
+DynamikTheme.of(context).setDynamikColorMode();
+
+// Set custom color.
+DynamikTheme.of(context).setCustomColorMode(e);
+
+```
+```dart
+Wrap(
+  runSpacing: 10,
+  spacing: 10,
+  children: SimpleThemeType.values
+      .map((e) => InputChip(
+            label: Text(e.name),
+            selected: themeState == e.themeState,
+            onPressed: () {
+              // Update theme.
+              DynamikTheme.of(context).setTheme(e.themeState);
+            },
+          ))
+      .toList(),
+),
+```
+See example for more.
+
+### Set predefined list of ThemeState
+You can also use `SimpleThemeType` which is predefined list of ThemeState. Or create you own list.
+```dart
+enum MyThemeType {
+  dynamik(ThemeState(
+    themeMode: ThemeMode.system,
+    colorMode: ColorMode.dynamik,
+  )),
+  light(ThemeState(themeMode: ThemeMode.light)),
+  dark(ThemeState(themeMode: ThemeMode.dark));
+
+  const MyThemeType(this.themeState);
+  final ThemeState themeState;
+}
+```
+
+### Implement `ThemeStorage` for persistence
+You can use Hive, SharedPreferences or any database of your choice.
 ```dart
 class InMemoryThemeStorage implements ThemeStorage {
   ThemeState? _state;

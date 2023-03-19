@@ -1,6 +1,7 @@
-## 0.0.1
-
-* initial release.
-
+## 0.0.3
+* update README.md
+* minor refactor
 ## 0.0.2
-* Update README.md
+* update README.md
+## 0.0.1
+* initial release.

@@ -32,7 +32,7 @@ class MyApp extends StatelessWidget {
           seedColor: Colors.red,
           brightness: Brightness.dark,
         ),
-        defaultThemeState: SimpleThemeType.dynamik.themeData,
+        defaultThemeState: SimpleThemeType.dynamik.themeState,
         builder: (themeData) {
           return themeData.copyWith(
             appBarTheme: const AppBarTheme(centerTitle: true),
@@ -87,9 +87,9 @@ class Home extends StatelessWidget {
               children: SimpleThemeType.values
                   .map((e) => InputChip(
                         label: Text(e.name),
-                        selected: themeState == e.themeData,
+                        selected: themeState == e.themeState,
                         onPressed: () {
-                          DynamikTheme.of(context).setTheme(e.themeData);
+                          DynamikTheme.of(context).setTheme(e.themeState);
                         },
                       ))
                   .toList(),

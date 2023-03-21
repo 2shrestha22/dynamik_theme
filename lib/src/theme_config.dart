@@ -2,9 +2,12 @@ import 'package:dynamik_theme/src/theme_storage.dart';
 import 'package:dynamik_theme/src/theme_state.dart';
 import 'package:flutter/material.dart';
 
-/// Extend this class to add further customization..
+/// {@template theme_config}
+/// Configuration for [DynamikTheme].
+/// {@endtemplate}
 class ThemeConfig {
-  ThemeConfig({
+  /// {@macro theme_config}
+  const ThemeConfig({
     required this.lightScheme,
     required this.darkScheme,
     required this.defaultThemeState,
@@ -13,11 +16,19 @@ class ThemeConfig {
     this.builder,
   });
 
+  /// Color scheme for light theme.
   final ColorScheme lightScheme;
+
+  /// Color scheme for dark theme.
   final ColorScheme darkScheme;
+
+  /// Default [ThemeState] to use when theme is not saved.
   final ThemeState defaultThemeState;
 
+  /// `true` if we want to use Material3 theme.
   final bool? useMaterial3;
+
+  /// [TextTheme] to be used.
   final TextTheme? textTheme;
 
   /// Adds furter customization on ThemeData.
@@ -33,7 +44,8 @@ class ThemeConfig {
   /// ```
   final ThemeData? Function(ThemeData themeData)? builder;
 
-  /// Override [fromScheme] to add further customization like adding Fonts.
+  /// Create a [ThemeData] based on the colors in the given [scheme] and
+  /// text styles of the optional [textTheme].
   ThemeData fromScheme(ColorScheme scheme) {
     final themeData = ThemeData.from(
       colorScheme: scheme,
@@ -46,7 +58,10 @@ class ThemeConfig {
     return themeData;
   }
 
+  /// [ThemeData] generated from provided config and [lightScheme].
   ThemeData get lightTheme => fromScheme(lightScheme);
+
+  /// [ThemeData] generated from provided config and [darkScheme].
   ThemeData get darkTheme => fromScheme(darkScheme);
 
   static ThemeStorage? _storage;

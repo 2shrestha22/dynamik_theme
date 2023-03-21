@@ -12,6 +12,7 @@ abstract class ThemeStorage {
   Future<void> delete();
 }
 
+/// Saves [ThemeState] in memory.
 class InMemoryThemeStorage implements ThemeStorage {
   ThemeState? _state;
 

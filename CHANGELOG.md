@@ -1,3 +1,5 @@
+## 0.0.4
+* add more documentation
 ## 0.0.3
 * update README.md
 * minor refactor

@@ -1,4 +1,6 @@
-Easy to use Dynamic Theme for Flutter with automatic persistence support.
+![dynamik_theme](assets/banner.png)
+
+`dynamik_theme` lets you easily set theme mode or custom color. It supports dynamic color on supported platforms and it also persists theme state using storage of your choice.
 
 <p>
 <a href="https://pub.dev/packages/dynamik_theme"><img src="https://img.shields.io/pub/v/dynamik_theme.svg" alt="Pub"></a>
@@ -6,13 +8,11 @@ Easy to use Dynamic Theme for Flutter with automatic persistence support.
 <a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/license-MIT-purple.svg" alt="License: MIT"></a>
 </p>
 
-## Supported Themes Modes
-
-- Light Theme
-- Dark Theme
-- System Mode
-- Dynamic Mode
-- Custom Color
+- Light Mode - based on light color scheme
+- Dark Mode - based on dark color scheme
+- System Mode - automatic light or dark theming based on light/dark color scheme
+- Dynamic Color - uses `dynamic_color` to automatically get color from device
+- Custom Color - set any color you want
 
 ![](https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExMzZjZTUzMmU2MzhiNzg3NmIzYzQ5OTE0MWFjYzdkY2MyMzc5NzUzOCZjdD1n/nBoQ3rfwkGv7XOSGjL/giphy.gif)
 ## Usage

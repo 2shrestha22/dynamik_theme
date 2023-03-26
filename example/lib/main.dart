@@ -2,18 +2,44 @@ import 'dart:math';
 
 import 'package:dynamik_theme/dynamik_theme.dart';
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/adapters.dart';
 
-void main() {
-  /// Set ThemeStorage. If not set InMemoryThemeStorage will be used.
-  ThemeConfig.storage = InMemoryThemeStorage();
-  runApp(const MyApp());
-}
-
+const _boxName = 'theme-storage';
 const _space = SizedBox(height: 16, width: 16);
 final _colors = List.generate(
     8,
     (index) =>
         Color((Random().nextDouble() * 0xFFFFFF).toInt()).withOpacity(1.0));
+
+class HiveStorage extends ThemeStorage {
+  final box = Hive.box<String>(_boxName);
+  final key = 'theme';
+  @override
+  Future<void> delete() async {
+    await box.clear();
+  }
+
+  @override
+  ThemeState? read() {
+    final res = box.get(key);
+    if (res == null) return null;
+    return ThemeState.fromJson(res);
+  }
+
+  @override
+  Future<void> write(ThemeState state) async {
+    await box.put(key, state.toJson());
+  }
+}
+
+void main() async {
+  await Hive.initFlutter();
+  await Hive.openBox<String>(_boxName);
+
+  /// Set ThemeStorage. If not set InMemoryThemeStorage will be used.
+  ThemeConfig.storage = HiveStorage();
+  runApp(const MyApp());
+}
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -25,9 +51,7 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
         // You can also create schemes from:
         // https://m3.material.io/theme-builder#/custom
-        lightScheme: ColorScheme.fromSeed(
-          seedColor: Colors.red,
-        ),
+        lightScheme: ColorScheme.fromSeed(seedColor: Colors.red),
         darkScheme: ColorScheme.fromSeed(
           seedColor: Colors.red,
           brightness: Brightness.dark,

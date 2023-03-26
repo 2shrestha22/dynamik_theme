@@ -18,10 +18,42 @@ Easy to use Dynamic Theme for Flutter with automatic persistence support.
 ## Usage
 
 ### Setup Storage
+Implement `ThemeStorage` for persistence.
+
+```dart
+class HiveStorage extends ThemeStorage {
+  final box = Hive.box<String>(_boxName);
+  final key = 'theme';
+  @override
+  Future<void> delete() async {
+    await box.clear();
+  }
+
+  @override
+  ThemeState? read() {
+    final res = box.get(key);
+    if (res == null) return null;
+    return ThemeState.fromJson(res);
+  }
+
+  @override
+  Future<void> write(ThemeState state) async {
+    await box.put(key, state.toJson());
+  }
+}
+```
+
+You can also use SharedPreferences or any database of your choice.
+
 ```dart
 void main() {
-  /// Set ThemeStorage. If not set InMemoryThemeStorage will be used.
-  ThemeConfig.storage = InMemoryThemeStorage();
+  // Initialize hive.
+  await Hive.initFlutter();
+  await Hive.openBox<String>(_boxName);
+
+  // Set ThemeStorage. If not set InMemoryThemeStorage will be used.
+  ThemeConfig.storage = HiveStorage();
+
   runApp(const MyApp());
 }
 ```
@@ -118,29 +150,6 @@ enum MyThemeType {
 
   const MyThemeType(this.themeState);
   final ThemeState themeState;
-}
-```
-
-### Implement `ThemeStorage` for persistence
-You can use Hive, SharedPreferences or any database of your choice.
-```dart
-class InMemoryThemeStorage implements ThemeStorage {
-  ThemeState? _state;
-
-  @override
-  Future<void> delete() async {
-    _state = null;
-  }
-
-  @override
-  ThemeState? read() {
-    return _state;
-  }
-
-  @override
-  Future<void> write(ThemeState state) async {
-    _state = state;
-  }
 }
 ```
 

@@ -1,4 +1,5 @@
-![dynamik_theme](assets/banner.png)
+<img src="https://raw.githubusercontent.com/2shrestha22/dynamik_theme/main/assets/banner.png"/>
+
 
 `dynamik_theme` lets you easily set theme mode or custom color. It supports dynamic color on supported platforms and it also persists theme state using storage of your choice.
 

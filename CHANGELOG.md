@@ -1,3 +1,6 @@
+## 0.1.0
+* upgrade to dart sdk 3.0.0
+
 ## 0.0.5
 * update example to use hive storage
 

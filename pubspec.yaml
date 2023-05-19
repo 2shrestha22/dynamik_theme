@@ -1,10 +1,10 @@
 name: dynamik_theme
 description: Easy to use Dynamic Theme for Flutter with automatic persistence support.
-version: 0.0.5
+version: 0.1.0
 repository: https://github.com/2shrestha22/dynamik_theme
 
 environment:
-  sdk: '>=2.19.2 <3.0.0'
+  sdk: '>=3.0.0 <4.0.0'
   flutter: ">=1.17.0"
 
 dependencies:

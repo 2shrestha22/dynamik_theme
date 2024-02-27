@@ -1,3 +1,9 @@
+## 0.1.2
+* upgrade dependencies
+
+## 0.1.1
+* update banner image
+
 ## 0.1.0
 * upgrade to dart sdk 3.0.0
 

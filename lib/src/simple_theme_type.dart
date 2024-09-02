@@ -19,7 +19,7 @@ enum SimpleThemeType {
   /// [ThemeMode.dark]
   dark(ThemeState(themeMode: ThemeMode.dark));
 
-  /// {@macrp simple_theme_type}
+  /// {@macro simple_theme_type}
   const SimpleThemeType(this.themeState);
 
   /// {@macro theme_state}

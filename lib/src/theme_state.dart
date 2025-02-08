@@ -55,6 +55,7 @@ class ThemeState {
       'themeMode': themeMode.name,
       'colorMode': colorMode?.name,
       'seed': seed?.value,
+      // see - https://github.com/flutter/flutter/issues/160184
     };
   }
 

@@ -7,9 +7,9 @@ import 'package:hive_flutter/adapters.dart';
 const _boxName = 'theme-storage';
 const _space = SizedBox(height: 16, width: 16);
 final _colors = List.generate(
-    8,
-    (index) =>
-        Color((Random().nextDouble() * 0xFFFFFF).toInt()).withOpacity(1.0));
+  8,
+  (index) => Color((Random().nextDouble() * 0xFFFFFF).toInt()).withAlpha(255),
+);
 
 class HiveStorage extends ThemeStorage {
   final box = Hive.box<String>(_boxName);

@@ -1,5 +1,5 @@
-import 'package:dynamik_theme/src/theme_storage.dart';
 import 'package:dynamik_theme/src/theme_state.dart';
+import 'package:dynamik_theme/src/theme_storage.dart';
 import 'package:flutter/material.dart';
 
 /// {@template theme_config}

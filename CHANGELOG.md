@@ -1,3 +1,7 @@
+## 0.1.5
+* fix lint warning
+* update android example app
+
 ## 0.1.4
 * upgrade dependencies
 

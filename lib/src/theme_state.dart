@@ -54,8 +54,7 @@ class ThemeState {
     return {
       'themeMode': themeMode.name,
       'colorMode': colorMode?.name,
-      'seed': seed?.value,
-      // see - https://github.com/flutter/flutter/issues/160184
+      'seed': seed?.toARGB32(),
     };
   }
 

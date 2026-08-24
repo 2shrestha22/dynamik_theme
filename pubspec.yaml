@@ -8,7 +8,7 @@ environment:
   flutter: ">=1.17.0"
 
 dependencies:
-  dynamic_color: ^1.7.0
+  dynamic_color: ">=1.7.0 <3.0.0"
   flutter:
     sdk: flutter
 
